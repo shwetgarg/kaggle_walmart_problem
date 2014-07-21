@@ -37,16 +37,14 @@ def read_file_in_chunks(filename, no_of_rows):
 			data = np.array(data).astype(np.float)
 			print "\nprediction of last file started"
 			yield data
-		
 
-def generate_line(passenger_id, survived):
-	return passenger_id + "," + str(survived) + "\n"
+def generate_header(separator, *args):
+	return separator.join(args) + "\n"
 
 def write_file(filename, header, iterator):
 	with open(filename, 'wb') as f:
+		f.write(header)
     		csv_file_object = csv.writer(f)
-   		csv_file_object.writerow(header)
-
 		for block in iterator:
 			csv_file_object.writerows(block)
 			

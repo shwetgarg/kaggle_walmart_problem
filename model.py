@@ -9,7 +9,6 @@ from sklearn.ensemble import RandomForestClassifier
 
 import utils
 
-
 def preprocessing(feature_vector):
 	imp = Imputer(missing_values='NaN', strategy='most_frequent', axis=0)
 	imp.fit(feature_vector)
@@ -20,14 +19,13 @@ def preprocessing(feature_vector):
 def train(train_filename):
 	data = utils.read_file(train_filename)
 
-	x = data[:,[0,1,2,3,4,5,7,8,9,10,11,12,13,14,15,16,17]]
+	x = numpy.delete(data, 6, axis=1)
 	y = data[:,[6]]
 	y = numpy.ravel(y)
 	print "initialisation of variables done"
 
 	x = preprocessing(x)
 
-	#model = svm.SVC()
 	model = RandomForestClassifier(n_estimators=10)
 	model.fit(x,y)
 	print "model fitting done"
@@ -53,8 +51,9 @@ def main(argv):
 	output_filename = argv[2]
 	no_of_rows_in_testfile_chunks = argv[3]
 	
+	header = utils.generate_header(',', 'Id', 'Weekly_Sales')
 	model = train(train_filename)
-	utils.write_file(output_filename, ["Id","Weekly_Sales"], predict(model, test_filename, no_of_rows_in_testfile_chunks))
+	utils.write_file(output_filename, header, predict(model, test_filename, no_of_rows_in_testfile_chunks))
 
 if __name__ == "__main__":
 	main(sys.argv[1:])
