@@ -24,7 +24,7 @@ def read_file_in_chunks(filename, no_of_rows):
 		for row in csv_file_object:
 			data.append(row)
 			counter += 1
-			if (counter == 4000):
+			if (counter == no_of_rows):
 				print "\nprediction of ", no_of_files, " file started"
 				data = np.array(data).astype(np.float)
 				no_of_files += 1

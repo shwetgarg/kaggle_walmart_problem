@@ -49,7 +49,7 @@ def main(argv):
 	train_filename = argv[0]
 	test_filename = argv[1]
 	output_filename = argv[2]
-	no_of_rows_in_testfile_chunks = argv[3]
+	no_of_rows_in_testfile_chunks = int(argv[3])
 	
 	header = utils.generate_header(',', 'Id', 'Weekly_Sales')
 	model = train(train_filename)
